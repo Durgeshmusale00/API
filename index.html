@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get a New Fact</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        /* Heading Styling */
+        h1 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        /* Fixed Size Fact Box */
+        .fact-box {
+            background: white;
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+            overflow: hidden; /* Prevents text from overflowing */
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            word-wrap: break-word;
+        }
+
+        /* Button Styling */
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Get a New Fact!</h1>
+
+    <div class="fact-box">
+        <p id="result">Click the button to get a fact!</p>
+    </div>
+
+    <button>Click Here</button>
+
+    <script>
+        let btn = document.querySelector("button");
+
+        btn.addEventListener("click", async () => {
+            let fact = await getFacts();
+            console.log(fact);
+            let p = document.querySelector("#result");
+            p.innerText = fact;
+        });
+
+        let url = "https://catfact.ninja/fact";
+
+        async function getFacts() {
+            try {
+                let res = await axios.get(url);
+                return res.data.fact;
+            } catch (e) {
+                console.log("Error - ", e);
+                return "No Fact Found";
+            }
+        }
+    </script>
+
+</body>
+</html>
